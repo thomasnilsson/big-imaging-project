@@ -4,19 +4,19 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-     name='dokr',  
-     version='0.1',
-     scripts=['dokr'] ,
-     author="Deepak Kumar",
-     author_email="deepak.kumar.iet@gmail.com",
-     description="A Docker and AWS utility package",
-     long_description=long_description,
-   long_description_content_type="text/markdown",
-     url="https://github.com/javatechy/dokr",
-     packages=setuptools.find_packages(),
-     classifiers=[
-         "Programming Language :: Python :: 3",
-         "License :: OSI Approved :: MIT License",
-         "Operating System :: OS Independent",
-     ],
- )
+        name='bigimg2019',  
+        version='0.6',
+        scripts=['bigimg2019'] ,
+        author="Thomas Nilsson",
+        author_email="tnni@dtu.dk",
+        description="A compilation of functions for Big Imaging 2019",
+        long_description=long_description,
+        long_description_content_type="text/markdown",
+        url="https://github.com/thomasnilsson/big-imaging-project",
+        packages=setuptools.find_packages(),
+        classifiers=[
+            "Programming Language :: Python :: 3",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: OS Independent",
+        ]
+)
