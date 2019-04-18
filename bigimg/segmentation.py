@@ -2,9 +2,6 @@ import cv2
 import numpy as np
 from skimage.morphology import binary_dilation, binary_erosion, binary_opening, binary_closing, disk
 
-from skimage.morphology import binary_dilation, binary_erosion, binary_opening, binary_closing, disk
-import numpy as np
-import cv2
 
 def K_means(patient_img):
     """Returns matrix
@@ -46,16 +43,18 @@ def roi_mean_yx(patient_img):
     num_slices = seg_slices.shape[0]
     y_all, x_all = np.zeros(num_slices), np.zeros(num_slices)
     neighborhood = disk(2)
-
-    for i, seg_slice in enumerate(seg_slices):
+    
+    for i,seg_slice in enumerate(seg_slices):
         # Perform erosion to get rid of wrongly segmented small parts
-        seg_slices_eroded = binary_erosion(seg_slice, neighborhood)
-
+        seg_slices_eroded = binary_erosion(seg_slice, neighborhood) 
+        
         # Filter out background of slice, after erosion [background=0, foreground=1]
         y_coord, x_coord = seg_slices_eroded.nonzero()
-
-        # Save mean coordinates of foreground
+        
+        # Save mean coordinates of foreground 
         y_all[i], x_all[i] = np.mean(y_coord), np.mean(x_coord)
-
+    
     # Return mean of mean foregrounds - this gives an estimate of ROI coords.
-    return np.mean(y_all), np.mean(x_all)
+    mean_y = int(np.mean(y_all))
+    mean_x = int(np.mean(x_all))
+    return mean_y, mean_x

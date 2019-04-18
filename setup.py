@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
         name='bigimg2019',  
-        version='0.6',
+        version='0.9',
         scripts=['bigimg2019'] ,
         author="Thomas Nilsson",
         author_email="tnni@dtu.dk",

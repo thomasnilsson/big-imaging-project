@@ -1,15 +1,20 @@
 import numpy as np
+import cv2
 
-
-# def preprocess_patient(patient_data, min_height, min_width):
-#     num_slices, time, height, width = patient_data.images.shape
-#     new_img_data = np.zeros((num_slices, time, min_height, min_width))
-#     for i in range(num_slices):
-#         for j in range(time):
-#             img_2d = patient_data.images[i, j]
-#             new_img_data[i,j] = crop_roi(img_2d, min_height, min_width)
-#     return new_img_data
-
+def rescale_patient_4d_imgs(patient):
+    img_4d = patient.images
+    if len(img_4d.shape) < 4: raise Exception("Patient images are not 4D!")
+    num_slices, time, height, width = img_4d.shape
+    col, row = patient.col_scaling, patient.row_scaling
+    scaled_height = int(height * row)
+    scaled_width = int(width * col)
+    scaled_imgs = np.zeros((num_slices, time, scaled_height, scaled_width))
+    
+    for i in range(num_slices):
+        for j in range(time):
+            scaled_imgs[i,j] = cv2.resize(src=img_4d[i,j], dsize=None, fx=col, fy=row)
+    
+    return scaled_imgs
 
 def crop_roi(img, dim_y, dim_x, cy, cx):
     """
@@ -17,6 +22,7 @@ def crop_roi(img, dim_y, dim_x, cy, cx):
     dimensions [dim_y, dim_x], i.e. height and width.
     Resulting image is filled out from top-left corner, and remaining pixels are left black.
     """
+    cy, cx = int(round(cy)), int(round(cx))
     h, w = img.shape
     if dim_x > w or dim_y > h: raise ValueError('Crop dimensions larger than image dimension!')
     new_img = np.zeros((dim_y, dim_x))
@@ -32,6 +38,7 @@ def crop_roi(img, dim_y, dim_x, cy, cx):
     # Find how many pixels to fill out in new image
     range_x = dx_right - dx_left
     range_y = dy_down - dy_up
+    
 
     # Fill out new image from top left corner
     # Leave pixels outside range as 0's (black)

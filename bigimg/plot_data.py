@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage.util import montage as montage2d
-montage3d = lambda x, **k: montage2d(np.stack([montage2d(y, **k) for y in x], 0))
 
+montage3d = lambda x, **k: montage2d(np.stack([montage2d(y, **k) for y in x], 0))
 
 def plot_patient_slices_3d(patient_slices, title=False, figsize=(20, 20)):
     '''Plots a 2D image per slice in series (3D in total)'''

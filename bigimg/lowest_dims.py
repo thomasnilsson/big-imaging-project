@@ -1,5 +1,5 @@
 import numpy as np
-from load_data import *
+from bigimg.load_data import *
 
 
 def find_min_dims(patients):
